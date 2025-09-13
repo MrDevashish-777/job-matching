@@ -1,0 +1,56 @@
+# Node & TypeScript
+node_modules/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+
+# Build outputs
+/dist/
+/build/
+/.cache/
+.cache/
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.*
+backend/.env
+backend/.env.*
+backend/src/config/env.ts
+
+# OS & Editor junk
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+*.code-workspace
+
+# Coverage & test
+coverage/
+.nyc_output/
+
+# Vite/Tailwind caches
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.cache/
+
+# Backend build
+backend/node_modules/
+backend/dist/
+backend/.cache/
+
+# Logs
+logs/
+backend/logs/
+frontend/logs/
+
+# Misc
+*.local
+*.tmp
+*.temp
