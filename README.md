@@ -1,13 +1,17 @@
 # AI-Powered Informal Sector Job Matchmaker
 
-Voice-first, multilingual-friendly prototype that connects informal workers (plumbers, electricians, drivers, etc.) with employers. Focused on a minimal, working core: JWT auth, worker/employer flows, CRUD, and a simple AI-style matching based on keywords.
+Voice-first, multilingual-friendly prototype that connects informal workers (plumbers, electricians, drivers, etc.) with employers. Now powered by fully free, local AI components: embeddings, speech-to-text, and a small conversational model.
 
 ## Tech Stack
 - **Frontend**: React 18 + TypeScript, Vite, TailwindCSS
 - **Backend**: Node.js + Express + TypeScript
 - **Database**: MongoDB (Mongoose)
 - **Auth**: JWT (email or phone + password)
-- **Matching**: Keyword extraction + Jaccard similarity (simple, fast, local)
+- **AI/ML**:
+  - **Embeddings**: HuggingFace sentence-transformers all-MiniLM-L6-v2 via `@xenova/transformers`
+  - **STT**: Vosk (offline, local)
+  - **Chat**: DialoGPT-small (local via `@xenova/transformers`)
+- **Matching**: Geospatial prefilter + cosine similarity over embeddings
 
 ## Features
 - **Worker**
@@ -87,6 +91,8 @@ Create `backend/.env` (copy from example):
 MONGO_URI=mongodb://127.0.0.1:27017/job_matchmaker
 JWT_SECRET=devsecret_change_me
 PORT=4000
+VOSK_MODEL_PATH=e:\job-matching\backend\models\vosk-model-small-en-us-0.15
+WAGE_RULES_PATH=e:\job-matching\backend\wageRules.json
 ```
 
 ## Install Dependencies
@@ -98,6 +104,16 @@ PORT=4000
    ```powershell
    Set-Location "e:\job-matching\frontend"; npm install
    ```
+
+## Vosk model download (required for voice profile)
+1) Download a small Vosk model (e.g., vosk-model-small-en-us-0.15) from the official repo.
+2) Extract to: `e:\job-matching\backend\models\vosk-model-small-en-us-0.15`
+3) Ensure `VOSK_MODEL_PATH` in `.env` points to that folder.
+
+## Seed demo data
+```powershell
+Set-Location "e:\job-matching\backend"; npm run seed
+```
 
 ## Run the Project
 1) Start MongoDB (local or Docker)

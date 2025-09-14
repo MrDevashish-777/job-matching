@@ -1,0 +1,7 @@
+[
+  { "jobType": "carpenter", "city": "delhi", "min": 600, "max": 1000 },
+  { "jobType": "plumber",   "city": "delhi", "min": 500, "max": 900 },
+  { "jobType": "electrician","city": "delhi", "min": 550, "max": 950 },
+  { "jobType": "maid",       "city": "mumbai","min": 4000, "max": 8000 },
+  { "jobType": "driver",     "city": "mumbai","min": 12000, "max": 18000 }
+]

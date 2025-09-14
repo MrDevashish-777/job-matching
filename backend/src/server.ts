@@ -5,10 +5,11 @@ import { connectDB } from './config/db';
 import authRoutes from './routes/authRoutes';
 import workerRoutes from './routes/workerRoutes';
 import jobRoutes from './routes/jobRoutes';
+import chatRoutes from './routes/chatRoutes';
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 
 app.get('/', (_req, res) => {
   res.json({ status: 'ok', name: 'AI-Powered Informal Sector Job Matchmaker API' });
@@ -17,6 +18,7 @@ app.get('/', (_req, res) => {
 app.use('/auth', authRoutes);
 app.use('/workers', workerRoutes);
 app.use('/jobs', jobRoutes);
+app.use('/chat', chatRoutes);
 
 const start = async () => {
   await connectDB(config.MONGO_URI);

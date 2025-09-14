@@ -1,31 +1,13 @@
-// Simple keyword-based matching between job requirements and worker skills
-export function normalize(tokens: string[]): string[] {
-  return Array.from(new Set(tokens.map(t => t.trim().toLowerCase()).filter(Boolean)));
-}
+import { cosineSimilarity } from './embeddingService';
 
-export function extractKeywords(text: string): string[] {
-  const words = text
-    .toLowerCase()
-    .replace(/[^a-z0-9\s,]/g, ' ')
-    .split(/[\s,]+/)
-    .filter(w => w.length > 2);
-  return normalize(words);
-}
-
-export function jaccardSimilarity(a: string[], b: string[]): number {
-  const A = new Set(a);
-  const B = new Set(b);
-  const intersection = Array.from(A).filter(x => B.has(x)).length;
-  const union = new Set([...Array.from(A), ...Array.from(B)]).size;
-  return union === 0 ? 0 : intersection / union;
-}
-
-export function rankWorkers(skillsRequired: string[], jobDescription: string, workers: { _id: string; skills: string[] }[]) {
-  const jobKeywords = normalize([...skillsRequired, ...extractKeywords(jobDescription)]);
-  return workers
-    .map(w => {
-      const score = jaccardSimilarity(jobKeywords, normalize(w.skills));
-      return { workerId: w._id, score };
-    })
+// Rank by cosine similarity using precomputed embeddings
+export function rankByEmbedding<T extends { _id: any; embedding?: number[] }>(
+  sourceEmbedding: number[],
+  items: T[],
+  limit = 50
+) {
+  const scored = items
+    .map((it) => ({ id: it._id.toString(), score: it.embedding && it.embedding.length ? cosineSimilarity(sourceEmbedding, it.embedding) : 0 }))
     .sort((a, b) => b.score - a.score);
+  return scored.slice(0, limit);
 }

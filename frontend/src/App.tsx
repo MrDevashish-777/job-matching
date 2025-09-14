@@ -3,6 +3,7 @@ import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import WorkerDashboard from './pages/WorkerDashboard';
 import EmployerDashboard from './pages/EmployerDashboard';
+import Chatbot from './pages/Chatbot';
 
 function Nav() {
   return (
@@ -84,6 +85,7 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/worker" element={<WorkerDashboard />} />
         <Route path="/employer" element={<EmployerDashboard />} />
+        <Route path="/chat" element={<Chatbot />} />
       </Routes>
     </div>
   );
