@@ -43,38 +43,73 @@ export default function WorkerDashboard() {
   }
 
   return (
-    <div className="grid md:grid-cols-2 gap-6">
-      <div className="bg-white p-4 rounded shadow">
-        <h2 className="font-semibold text-lg mb-2">My Profile</h2>
-        {me ? (
-          <div className="space-y-2">
-            <input className="w-full border p-2" value={me.name} onChange={e=>setMe({...me, name:e.target.value})} />
-            <input className="w-full border p-2" placeholder="comma separated skills" value={(me.skills||[]).join(', ')} onChange={e=>setMe({...me, skills:e.target.value.split(',').map(s=>s.trim())})} />
-            <input className="w-full border p-2" placeholder="Experience years" type="number" value={me.experienceYears||0} onChange={e=>setMe({...me, experienceYears:Number(e.target.value)})} />
-            <input className="w-full border p-2" placeholder="Location" value={me.location||''} onChange={e=>setMe({...me, location:e.target.value})} />
-            <label className="flex items-center gap-2"><input type="checkbox" checked={me.availability ?? true} onChange={e=>setMe({...me, availability:e.target.checked})} /> Available</label>
-            <button className="bg-black text-white px-3 py-2" onClick={saveProfile}>Save</button>
+    <div className="page-container">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-gray-200 mb-2">Worker Dashboard</h1>
+          <p className="text-green-100">Manage your profile and find perfect job matches</p>
+        </div>
+        
+        <div className="grid lg:grid-cols-2 gap-8">
+          <div className="card">
+            <div className="flex items-center mb-6">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mr-4">
+                <span className="text-white text-xl">👤</span>
+              </div>
+              <h2 className="text-2xl font-semibold text-gray-300">My Profile</h2>
+            </div>
+            
+            {me ? (
+              <div className="space-y-4">
+                <input className="input-field" placeholder="Full Name" value={me.name} onChange={e=>setMe({...me, name:e.target.value})} />
+                <input className="input-field" placeholder="Skills (comma separated)" value={(me.skills||[]).join(', ')} onChange={e=>setMe({...me, skills:e.target.value.split(',').map(s=>s.trim())})} />
+                <input className="input-field" placeholder="Years of Experience" type="number" value={me.experienceYears||0} onChange={e=>setMe({...me, experienceYears:Number(e.target.value)})} />
+                <input className="input-field" placeholder="Location" value={me.location||''} onChange={e=>setMe({...me, location:e.target.value})} />
+                <label className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
+                  <input type="checkbox" className="w-5 h-5 text-blue-500 rounded" checked={me.availability ?? true} onChange={e=>setMe({...me, availability:e.target.checked})} /> 
+                  <span className="text-gray-700 font-medium">Available for work</span>
+                </label>
+                <button className="btn-secondary w-full" onClick={saveProfile}>Save Profile</button>
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-green-500">Please login as a worker to view your profile</p>
+              </div>
+            )}
           </div>
-        ) : (
-          <p>Login as worker to view.</p>
-        )}
-      </div>
 
-      <div className="bg-white p-4 rounded shadow">
-        <h2 className="font-semibold text-lg mb-2">Job Recommendations</h2>
-        <ul className="space-y-3">
-          {jobs.map(j => (
-            <li key={j._id} className="border p-3 rounded">
-              <h3 className="font-semibold">{j.title}</h3>
-              <p className="text-sm text-gray-700">{j.description}</p>
-              <p className="text-xs text-gray-500">Skills: {j.skillsRequired.join(', ')}</p>
-              <button className="mt-2 border px-3 py-1" onClick={()=>apply(j._id)}>Apply</button>
-            </li>
-          ))}
-        </ul>
-      </div>
+          <div className="card">
+            <div className="flex items-center mb-6">
+              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-600 rounded-full flex items-center justify-center mr-4">
+                <span className="text-white text-xl">💼</span>
+              </div>
+              <h2 className="text-2xl font-semibold text-gray-300">Job Recommendations</h2>
+            </div>
+            
+            <div className="space-y-4 max-h-96 overflow-y-auto">
+              {jobs.map(j => (
+                <div key={j._id} className="bg-gray-50 border border-gray-200 p-4 rounded-xl hover:shadow-md transition-all">
+                  <h3 className="font-semibold text-gray-800 mb-2">{j.title}</h3>
+                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">{j.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {j.skillsRequired.map(skill => (
+                      <span key={skill} className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">{skill}</span>
+                    ))}
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500">📍 {j.location || 'Remote'}</span>
+                    <button className="btn-secondary text-sm py-2 px-4" onClick={()=>apply(j._id)}>Apply Now</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
-      {message && <p className="md:col-span-2 text-sm text-gray-700">{message}</p>}
+        {message && <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+          <p className="text-blue-700 text-center font-medium">{message}</p>
+        </div>}
+      </div>
     </div>
   );
 }

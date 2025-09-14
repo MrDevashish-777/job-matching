@@ -2,4 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
-body { @apply bg-gray-50 text-gray-900; }
+body { 
+  background: #1e1e1e;
+  color: #ffffff;
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+}
+
+.glass-card {
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 255, 64, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 255, 64, 0.1);
+}
+
+.input-field {
+  @apply w-full p-4 rounded-xl border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-green-400 focus:ring-2 focus:ring-green-400/20 focus:outline-none transition-all;
+}
+
+.btn-primary {
+  @apply w-full bg-green-400 hover:bg-green-300 text-black p-4 rounded-xl font-semibold transition-all transform hover:scale-105 shadow-lg;
+  background: #00FF40;
+  color: #000000;
+}
+
+.btn-secondary {
+  @apply px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-xl transition-all border border-gray-600 shadow-md hover:shadow-lg;
+}
+
+.card {
+  @apply bg-gray-900 border border-gray-700 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all;
+}
+
+.nav-link {
+  @apply text-gray-300 hover:text-white transition-colors font-medium;
+}
+
+.page-container {
+  @apply min-h-screen p-6;
+  background: #1e1e1e;
+  position: relative;
+}
+
+/* Animated Grid Background */
+.animated-grid {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.grid-square {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #b6ffb4;
+  opacity: 0.1;
+  animation: float 6s ease-in-out infinite;
+}
+
+.grid-square:nth-child(odd) {
+  animation-delay: -2s;
+}
+
+.grid-square:nth-child(3n) {
+  animation-delay: -4s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.1;
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 0.3;
+  }
+}
+
+/* Content positioning */
+.content-wrapper {
+  position: relative;
+  z-index: 10;
+}

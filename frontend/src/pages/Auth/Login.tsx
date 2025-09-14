@@ -22,19 +22,42 @@ export default function Login() {
   }
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded shadow">
-      <h1 className="text-xl font-semibold mb-4">Login</h1>
-      <form className="space-y-3" onSubmit={submit}>
-        <div className="flex gap-2">
-          <button type="button" className={`px-3 py-1 border ${role==='worker'?'bg-gray-200':''}`} onClick={()=>setRole('worker')}>Worker</button>
-          <button type="button" className={`px-3 py-1 border ${role==='employer'?'bg-gray-200':''}`} onClick={()=>setRole('employer')}>Employer</button>
+    <div className="page-container flex items-center justify-center">
+      <div className="max-w-md w-full glass-card p-8">
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-white text-2xl">💼</span>
+          </div>
+          <h1 className="text-3xl font-bold text-gray-300 mb-2">Welcome Back</h1>
+          <p className="text-gray-300">Sign in to your account</p>
         </div>
-        <input className="w-full border p-2" placeholder="Email (or leave blank and use phone)" value={email} onChange={e=>setEmail(e.target.value)} />
-        <input className="w-full border p-2" placeholder="Phone (optional)" value={phone} onChange={e=>setPhone(e.target.value)} />
-        <input className="w-full border p-2" placeholder="Password" type="password" value={password} onChange={e=>setPassword(e.target.value)} />
-        <button className="w-full bg-black text-white p-2">Login</button>
-      </form>
-      {message && <p className="mt-3 text-sm text-gray-700">{message}</p>}
+        
+        <form className="space-y-6" onSubmit={submit}>
+          <div className="flex gap-3 mb-6">
+            <button type="button" className={`flex-1 py-3 px-4 rounded-xl border-2 transition-all font-medium ${
+              role==='worker' ? 'bg-blue-500 border-blue-500 text-white shadow-lg' : 'border-gray-300 text-gray-600 hover:border-blue-300'
+            }`} onClick={()=>setRole('worker')}>Worker</button>
+            <button type="button" className={`flex-1 py-3 px-4 rounded-xl border-2 transition-all font-medium ${
+              role==='employer' ? 'bg-blue-500 border-blue-500 text-white shadow-lg' : 'border-gray-300 text-gray-600 hover:border-blue-300'
+            }`} onClick={()=>setRole('employer')}>Employer</button>
+          </div>
+          
+          <input className="input-field" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} />
+          <input className="input-field" placeholder="Phone (optional)" value={phone} onChange={e=>setPhone(e.target.value)} />
+          <input className="input-field" placeholder="Password" type="password" value={password} onChange={e=>setPassword(e.target.value)} />
+          
+          <button className="btn-primary">Sign In</button>
+          
+          <div className="text-center">
+            <span className="text-gray-600 text-sm">Don't have an account? </span>
+            <a href="/register" className="text-blue-500 hover:text-blue-600 text-sm font-medium">Sign up here</a>
+          </div>
+        </form>
+        
+        {message && <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-sm text-red-600 text-center">{message}</p>
+        </div>}
+      </div>
     </div>
   );
 }
